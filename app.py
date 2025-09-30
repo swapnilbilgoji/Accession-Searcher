@@ -29,9 +29,18 @@ if uploaded_file:
     df.columns = df.columns.str.strip().str.replace(" ", "_").str.replace(".", "")
 
     # Input accession number
-    accession_no = st.text_input("Enter Accession Number:")
+    accession_no_input = st.text_input("Enter Accession Number:")
 
-    if accession_no:
+    if accession_no_input:
+        # Make it always 6 digits
+        if len(accession_no_input) == 5:
+            accession_no = "0" + accession_no_input
+        elif len(accession_no_input) == 4:
+            accession_no = "00" + accession_no_input
+        elif len(accession_no_input) == 3:
+            accession_no = "000" + accession_no_input
+        else:
+            accession_no = accession_no_input  # already 6 digits
         result = df[df["Acc_No"].astype(str) == accession_no]
 
         if not result.empty:
